@@ -54,8 +54,8 @@ internal sealed class PortraiturePlusMod : Mod
 	{
 		PortraiturePlusFix.Initialize(monitor: Monitor);
 		var harmony = new Harmony(ModManifest.UniqueID);
-		harmony.Patch(original: PortraiturePlusFix.GetPortrait(), prefix: new HarmonyMethod(AccessTools.Method(typeof(PortraiturePlusFix), nameof(PortraiturePlusFix.getPortrait_Prefix))));
-		harmony.Patch(original: PortraiturePlusFix.LoadAllPortraits(), postfix: new HarmonyMethod(AccessTools.Method(typeof(PortraiturePlusFix), nameof(PortraiturePlusFix.loadAllPortraits_Postfix))));
+		harmony.Patch(original: PortraiturePlusFix.GetPortrait(), prefix: new HarmonyMethod(AccessTools.Method(typeof(PortraiturePlusFix), nameof(PortraiturePlusFix.GetPortrait_Prefix))));
+		harmony.Patch(original: PortraiturePlusFix.LoadAllPortraits(), postfix: new HarmonyMethod(AccessTools.Method(typeof(PortraiturePlusFix), nameof(PortraiturePlusFix.LoadAllPortraits_Postfix))));
 	}
 		
 	public static Texture2D? GetPortrait(NPC npc, Texture2D tex, List<string> folders, PresetCollection presets,

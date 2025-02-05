@@ -9,11 +9,11 @@ namespace PortraiturePlus
 {
 	internal class PortraiturePlusFix
 	{
-		private static IMonitor Monitor = null!;
+		private static IMonitor _monitor = null!;
 		
 		internal static void Initialize(IMonitor monitor)
 		{
-			Monitor = monitor;
+			_monitor = monitor;
 		}
 		internal static MethodInfo GetPortrait()
 		{
@@ -28,7 +28,7 @@ namespace PortraiturePlus
 			return AccessTools.Method("TextureLoader:loadAllPortraits");
 		}
 
-		internal static void loadAllPortraits_Postfix()
+		internal static void LoadAllPortraits_Postfix()
 		{
 			var folders = Traverse.Create(typeof(PortraitureMod).Assembly.GetType("Portraiture.TextureLoader")).Field<List<string>>("folders").Value;
 			var pTextures = Traverse.Create(typeof(PortraitureMod).Assembly.GetType("Portraiture.TextureLoader")).Field<Dictionary<string, Texture2D>>("pTextures").Value;
@@ -36,7 +36,7 @@ namespace PortraiturePlus
 		}
 
 		[SuppressMessage("ReSharper", "InconsistentNaming")]
-		internal static bool getPortrait_Prefix(NPC npc, Texture2D tex, ref Texture2D? __result)
+		internal static bool GetPortrait_Prefix(NPC npc, Texture2D tex, ref Texture2D? __result)
 		{
 			var folders = Traverse.Create(typeof(PortraitureMod).Assembly.GetType("Portraiture.TextureLoader")).Field<List<string>>("folders").Value;
 			var presets = Traverse.Create(typeof(PortraitureMod).Assembly.GetType("Portraiture.TextureLoader")).Field<PresetCollection>("presets").Value;
@@ -51,7 +51,7 @@ namespace PortraiturePlus
 			}
 			catch (Exception ex)
 			{
-				Monitor.Log($"Failed in {nameof(getPortrait_Prefix)}:\n{ex}", LogLevel.Error);
+				_monitor.Log($"Failed in {nameof(GetPortrait_Prefix)}:\n{ex}", LogLevel.Error);
 				return true;
 			}
 		}
