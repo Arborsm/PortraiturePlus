@@ -111,7 +111,7 @@ internal sealed class PortraiturePlusMod : Mod
 		var gl = Game1.currentLocation.Name ?? "";
 		var isOutdoors = Game1.currentLocation.IsOutdoors ? "Outdoor" : "Indoor";
 		var week = new[] { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" }[
-				(Game1.dayOfMonth - 1) % 7];
+				Game1.dayOfMonth % 7];
 		var raining = Game1.isRaining ? "Rain" : "";
 		var year = Game1.year.ToString();
 		name = folder + ">" + name;
