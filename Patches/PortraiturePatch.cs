@@ -1,20 +1,23 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 using HarmonyLib;
 using Microsoft.Xna.Framework.Graphics;
 using Portraiture;
+using PortraiturePlus.Main;
 using StardewModdingAPI;
 using StardewValley;
-using System.Reflection;
-namespace PortraiturePlus;
 
-internal class PortraiturePlusFix
+namespace PortraiturePlus.Patches;
+
+internal class PortraiturePatch
 {
 	private static IMonitor _monitor = null!;
 		
-	internal static void Initialize(IMonitor monitor)
+	internal static void Init(IMonitor monitor)
 	{
 		_monitor = monitor;
 	}
+	
 	internal static MethodInfo GetPortrait()
 	{
 		return AccessTools.Method("TextureLoader:getPortrait", new[]
@@ -32,7 +35,8 @@ internal class PortraiturePlusFix
 	{
 		var folders = Traverse.Create(typeof(PortraitureMod).Assembly.GetType("Portraiture.TextureLoader")).Field<List<string>>("folders").Value;
 		var pTextures = Traverse.Create(typeof(PortraitureMod).Assembly.GetType("Portraiture.TextureLoader")).Field<Dictionary<string, Texture2D>>("pTextures").Value;
-		PortraiturePlusMod.AddContentPackTextures(folders, pTextures);
+		ContentPackLoader.AddContentPackTextures(folders, pTextures);
+		PortraitManager.PTextures = pTextures;
 	}
 
 	[SuppressMessage("ReSharper", "InconsistentNaming")]
@@ -46,7 +50,7 @@ internal class PortraiturePlusFix
 			return true;
 		try
 		{
-			__result = PortraiturePlusMod.GetPortrait(npc, tex, folders, presets, activeFolder, pTextures);
+			__result = PortraitManager.GetPortrait(npc, tex, folders, presets, activeFolder, pTextures);
 			return false;
 		}
 		catch (Exception ex)

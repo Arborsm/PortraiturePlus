@@ -17,10 +17,10 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Update="PortraiturePlusFix.cs">
+      <Compile Update="PortraiturePlusMod.cs">
         <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       </Compile>
-      <Compile Update="PortraiturePlusMod.cs">
+      <Compile Update="Patches\PortraiturePatch.cs">
         <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       </Compile>
     </ItemGroup>
@@ -28,6 +28,7 @@
     <ItemGroup Condition="'$(ExcludePortraiture)' != 'true'">
         <Reference Include="Portraiture">
             <HintPath>E:\SteamLibrary\steamapps\common\Stardew Valley\mods\Portraiture\Portraiture.dll</HintPath>
+            <Private>False</Private>
         </Reference>
     </ItemGroup>
 
