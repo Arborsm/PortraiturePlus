@@ -17,7 +17,7 @@ internal class ShopMenuPatch
         typeof(ShopOwnerData), typeof(NPC)
     });
 
-    internal static bool TryLoadPortrait_Prefix(ShopOwnerData ownerData, NPC owner, ref Texture2D? __result)
+    internal static bool TryLoadPortrait_Prefix(ShopOwnerData ownerData, NPC? owner, ref Texture2D? __result)
     {
         var folders = Traverse.Create(typeof(PortraitureMod).Assembly.GetType("Portraiture.TextureLoader")).Field<List<string>>("folders").Value;
         var activeFolder = Traverse.Create(typeof(PortraitureMod).Assembly.GetType("Portraiture.TextureLoader")).Field<int>("activeFolder").Value;
@@ -26,7 +26,7 @@ internal class ShopMenuPatch
             .ToDictionary(x => x.Key, x => x.Value);
         
         var matchingKey = pTextures.Keys.FirstOrDefault(k => k.Contains(ownerData.Name))
-                          ?? pTextures.Keys.FirstOrDefault(k => k.Contains(owner.Name));
+                          ?? (owner == null ? null : pTextures.Keys.FirstOrDefault(k => k.Contains(owner.Name)));
 
         if (matchingKey == null) return true;
         __result = pTextures[matchingKey];
