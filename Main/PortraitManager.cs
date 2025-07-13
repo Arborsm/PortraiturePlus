@@ -86,8 +86,13 @@ internal class PortraitManager
 		if (SaveGame.loaded?.weddingToday ?? Game1.weddingToday || Game1.CurrentEvent != null && Game1.CurrentEvent.isWedding)
 			return "Wedding";
 
-		var festival = FestivalHelper.FestivalDates.TryGetValue($"{Game1.currentSeason}{Game1.dayOfMonth}", out var festivalName) ? festivalName : "";
-		return festival;
+		if (Game1.CurrentEvent != null && Game1.CurrentEvent.isFestival) {
+			var festival = FestivalHelper.FestivalDates.TryGetValue($"{Game1.currentSeason}{Game1.dayOfMonth}", out
+				var festivalName) ? festivalName : "";
+			return festival;
+		}
+
+		return "";
 	}
 	
 	private static Texture2D? GetHdpPortrait(Texture2D tex, string name)
